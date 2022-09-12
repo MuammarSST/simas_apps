@@ -46,7 +46,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
     db.getConnection().then((conn){
 
-      String sql = "INSERT INTO user (nik, username, password) VALUES ('$nik', '$username', md5'$password')";
+      String sql = "INSERT INTO user (nik, username, password) VALUES ('$nik', '$username', md5($password))";
       // print(sql);
       conn.query(sql).then((results) {
         Fluttertoast.showToast(

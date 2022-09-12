@@ -74,7 +74,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
 
       db.getConnection().then((conn) {
-        String sql = "select * from user where nik ='$nik' and password = '$password'";
+        String sql = "select * from user where nik ='$nik' and password = md5($password)";
         conn.query(sql).then((results) {
           if(results.isEmpty){
             print('gagal login');

@@ -38,27 +38,58 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   var db = new Mysql();
 
 
-  prosesDaftar(){
+  kembaliDaftar(){
     Navigator.push(
       context, MaterialPageRoute(builder: (context) => Daftar(),),);
   }
 
-  prosesLogin() {
+  prosesLogin(){
     var nik=nikController.text;
     var password=passwordController.text;
 
+    if(nik.isEmpty){
+      Fluttertoast.showToast(
+          msg: "Masukan NIK",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
 
-    db.getConnection().then((conn) {
-      String sql = "select * from user where nik ='$nik' and password = '$password'";
-      // print(sql);
-      conn.query(sql).then((results) {
+    }
+    if(password.isEmpty){
+      Fluttertoast.showToast(
+          msg: "Masukan Password",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
 
-        for(var row in results){
+    }
 
-          setState(() {
 
-            print(row[1]);
-            print(row[3]);
+      db.getConnection().then((conn) {
+        String sql = "select * from user where nik ='$nik' and password = '$password'";
+        conn.query(sql).then((results) {
+          if(results.isEmpty){
+            print('gagal login');
+            Fluttertoast.showToast(
+                msg: "NIK dan Password Salah",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.red,
+                textColor: Colors.white,
+                fontSize: 16.0
+            );
+          }
+          for(var row in results){
+            print(row);
             Fluttertoast.showToast(
                 msg: "Login Berhasil",
                 toastLength: Toast.LENGTH_SHORT,
@@ -70,13 +101,16 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             );
             Navigator.push(
               context, MaterialPageRoute(builder: (context) => DashBoard(),),);
+          }
 
 
-          });
-        }
+
+
+        });
+        conn.close();
       });
-      conn.close();
-    });
+
+
   }
 
   @override
@@ -141,7 +175,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                     'Daftar',
                     style: TextStyle(fontSize: 20),
                   ),
-                  onPressed: prosesDaftar,
+                  onPressed: kembaliDaftar,
                 )
               ],
               mainAxisAlignment: MainAxisAlignment.center,

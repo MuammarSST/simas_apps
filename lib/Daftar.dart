@@ -44,23 +44,24 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     var username=usernameController.text;
     var password=passwordController.text;
 
-    db.getConnection().then((conn) async {
+    db.getConnection().then((conn){
 
-      String sql = "INSERT INTO user (nik, username, password) VALUES ('$nik', '$username', '$password')";
+      String sql = "INSERT INTO user (nik, username, password) VALUES ('$nik', '$username', md5'$password')";
       // print(sql);
-      var result = await conn.query(sql);
-      Fluttertoast.showToast(
-          msg: "Daftar Berhasil",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.blue,
-          textColor: Colors.white,
-          fontSize: 16.0
-      );
+      conn.query(sql).then((results) {
+        Fluttertoast.showToast(
+            msg: "Daftar Berhasil",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.blue,
+            textColor: Colors.white,
+            fontSize: 16.0
+        );
 
-      Navigator.push(
-        context, MaterialPageRoute(builder: (context) => MyApp(),),);
+        Navigator.push(
+          context, MaterialPageRoute(builder: (context) => MyApp(),),);
+      });
 
       conn.close();
     });

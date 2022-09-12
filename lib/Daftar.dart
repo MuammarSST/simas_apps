@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'database.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'main.dart';
 
 void main() => runApp(const Daftar());
 
 class Daftar extends StatelessWidget {
   const Daftar({Key? key}) : super(key: key);
 
-  static const String _title = 'SIMAS';
+  static const String _title = '----- PENDAFTARAN SIMAS -----';
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +31,39 @@ class MyStatefulWidget extends StatefulWidget {
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   TextEditingController nikController = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   kembaliLogin(){
-
+    Navigator.push(
+      context, MaterialPageRoute(builder: (context) => MyApp(),),);
   }
   prosesDaftar(){
+    var db = new Mysql();
+    var nik=nikController.text;
+    var username=usernameController.text;
+    var password=passwordController.text;
+
+    db.getConnection().then((conn) async {
+
+      String sql = "INSERT INTO user (nik, username, password) VALUES ('$nik', '$username', '$password')";
+      // print(sql);
+      var result = await conn.query(sql);
+      Fluttertoast.showToast(
+          msg: "Daftar Berhasil",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.blue,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+
+      Navigator.push(
+        context, MaterialPageRoute(builder: (context) => MyApp(),),);
+
+      conn.close();
+    });
 
   }
   @override
@@ -72,7 +102,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             Container(
               padding: const EdgeInsets.all(10),
               child: TextField(
-                controller: nikController,
+                controller: usernameController,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Username',

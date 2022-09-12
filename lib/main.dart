@@ -10,7 +10,7 @@ void main() => runApp(const MyApp());
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  static const String _title = 'SIMAS';
+  static const String _title = '----- LOGIN SIMAS -----';
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +36,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   TextEditingController passwordController = TextEditingController();
 
   var db = new Mysql();
-  var nik = '';
-  var password='';
+
 
   prosesDaftar(){
     Navigator.push(
@@ -45,8 +44,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   }
 
   prosesLogin() {
-    nik=nikController.text;
-    password=passwordController.text;
+    var nik=nikController.text;
+    var password=passwordController.text;
 
 
     db.getConnection().then((conn) {

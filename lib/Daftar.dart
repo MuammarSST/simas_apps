@@ -44,9 +44,44 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     var username=usernameController.text;
     var password=passwordController.text;
 
+    if(nik.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "Masukan NIK",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+    }
+    if(username.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "Masukan Username",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+    }
+
+    if(password.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "Masukan Password",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+    }
+
     db.getConnection().then((conn){
 
-      String sql = "INSERT INTO user (nik, username, password) VALUES ('$nik', '$username', md5($password))";
+      String sql = "INSERT INTO user (nik, username, password) VALUES ('$nik', '$username', md5('$password'))";
       // print(sql);
       conn.query(sql).then((results) {
         Fluttertoast.showToast(

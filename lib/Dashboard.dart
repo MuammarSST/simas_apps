@@ -2,19 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:simas/UserModel.dart';
 import 'database.dart';
 
-
-
-
-
 class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Dashboard'),),
+      appBar: AppBar(
+        title: Text("Dashboard"),
+      ),
       body: Center(
         child: showFutureDBData(),
-      ),
 
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: showFutureDBData,
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
+      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
@@ -30,14 +33,21 @@ showFutureDBData() {
       }
 
       return ListView.builder(
+
         itemCount: snapshot.data!.length,
         itemBuilder: (context, index) {
           final user = snapshot.data![index];
           return ListTile(
+              trailing: TextButton(
+                onPressed: showFutureDBData,
+                child: const Icon(Icons.edit),
+              ),
             leading: Text(user.IdUser),
             title: Text(user.nik),
             subtitle: Text(user.username),
+
           );
+
         },
       );
     },
@@ -69,4 +79,3 @@ Future<List<UserModel>> getmySQLData() async {
   });
   return mylist;
 }
-

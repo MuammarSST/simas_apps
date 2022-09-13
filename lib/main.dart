@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'database.dart';
-import 'fitness_app_home_screen.dart';
+import 'Dashboard.dart';
 import 'Daftar.dart';
 
 
@@ -100,7 +100,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 fontSize: 16.0
             );
             Navigator.push(
-              context, MaterialPageRoute(builder: (context) => FitnessAppHomeScreen(),),);
+              context, MaterialPageRoute(builder: (context) => Dashboard(),),);
           }
 
 

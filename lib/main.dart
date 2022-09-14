@@ -4,11 +4,18 @@ import 'database.dart';
 import 'Dashboard.dart';
 import 'Daftar.dart';
 
+import 'package:flutter_session_manager/flutter_session_manager.dart';
+var sessionManager = SessionManager();
 
-void main() => runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  dynamic token= await sessionManager.get("token");
+  runApp(MaterialApp(home: token == null ? Login() : Dashboard(),));
+}
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+
+class Login extends StatelessWidget {
+  const Login({Key? key}) : super(key: key);
 
   static const String _title = '----- LOGIN SIMAS -----';
 
@@ -75,7 +82,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
       db.getConnection().then((conn) {
         String sql = "select * from user where nik ='$nik' and password = md5('$password')";
-        conn.query(sql).then((results) {
+        conn.query(sql).then((results) async {
           if(results.isEmpty){
             print('gagal login');
             Fluttertoast.showToast(
@@ -90,6 +97,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           }
           for(var row in results){
             print(row);
+
+            await sessionManager.set("token", "$row[nik]");
+
             Fluttertoast.showToast(
                 msg: "Login Berhasil",
                 toastLength: Toast.LENGTH_SHORT,

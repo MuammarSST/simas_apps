@@ -37,7 +37,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
   kembaliLogin(){
     Navigator.push(
-      context, MaterialPageRoute(builder: (context) => MyApp(),),);
+      context, MaterialPageRoute(builder: (context) => Login(),),);
   }
   prosesDaftar(){
     var db = new Mysql();
@@ -96,7 +96,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         );
 
         Navigator.push(
-          context, MaterialPageRoute(builder: (context) => MyApp(),),);
+          context, MaterialPageRoute(builder: (context) => Login(),),);
       });
 
       conn.close();

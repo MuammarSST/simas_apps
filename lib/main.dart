@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'database.dart';
-import 'Dashboard.dart';
+import 'dashboard.dart';
 import 'Daftar.dart';
 
 import 'package:flutter_session_manager/flutter_session_manager.dart';

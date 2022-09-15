@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:simas/SuratMasukPage.dart';
-import 'package:simas/SuratKeluarPage.dart';
-import 'DashboardPage.dart';
+import 'package:simas/page/SuratMasukPage.dart';
+import 'package:simas/page/SuratKeluarPage.dart';
+import 'package:simas/page/DashboardPage.dart';
 
 class RouterPage extends StatefulWidget {
   const RouterPage({Key? key}) : super(key: key);

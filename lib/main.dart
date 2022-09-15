@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'database.dart';
-import 'dashboard.dart';
-import 'Daftar.dart';
+import 'package:simas/database/Database.dart';
+import 'Dashboard.dart';
+import 'page/DaftarPage.dart';
 
 import 'package:flutter_session_manager/flutter_session_manager.dart';
 var sessionManager = SessionManager();

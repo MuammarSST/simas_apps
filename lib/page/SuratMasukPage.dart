@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'database.dart';
-import 'package:simas/SuratMasukModel.dart';
+import 'package:simas/database/Database.dart';
+import 'package:simas/model/SuratMasukModel.dart';
 class SuratMasukPage extends StatelessWidget {
   const SuratMasukPage();
 

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'database.dart';
-import 'package:simas/SuratKeluarModel.dart';
-class SuratKeluarPage extends StatelessWidget {
-  const SuratKeluarPage();
+import 'package:simas/database/Database.dart';
+import 'package:simas/model/UserModel.dart';
+import 'package:simas/model/SuratMasukModel.dart';
+class DashboardPage extends StatelessWidget {
+  const DashboardPage();
 
   @override
   Widget build(BuildContext context) {
@@ -15,10 +16,10 @@ class SuratKeluarPage extends StatelessWidget {
             children: [
               TabBar(
                 tabs: [
-                  Tab(
-                    text: 'Laporan Surat Keluar',
-                  ),
 
+                  Tab(
+                    text: 'Dashboard',
+                  ),
                 ],
               )
             ],
@@ -26,7 +27,7 @@ class SuratKeluarPage extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            SuratKeluar(),
+            SuratMasuk(),
           ],
         ),
       ),
@@ -34,14 +35,14 @@ class SuratKeluarPage extends StatelessWidget {
   }
 }
 
-class SuratKeluar extends StatefulWidget {
+
+class SuratMasuk extends StatefulWidget {
   @override
   _IncomingPageState createState() => _IncomingPageState();
-
 }
 
-class _IncomingPageState extends State<SuratKeluar>
-    with AutomaticKeepAliveClientMixin<SuratKeluar> {
+class _IncomingPageState extends State<SuratMasuk>
+    with AutomaticKeepAliveClientMixin<SuratMasuk> {
   int count = 10;
 
   void clear() {
@@ -59,13 +60,13 @@ class _IncomingPageState extends State<SuratKeluar>
       //fitur digunakan untuk refresh tarik kebawah
       body: RefreshIndicator(
         onRefresh: () =>
-            getmySQLDataKeluar(),
+            getmySQLDataMasuk(),
         color: Colors.red,
         child: Container(
           margin: EdgeInsets.all(10),
           //ketika page ini di akses maka meminta data ke api
           child: FutureBuilder(
-            future: getmySQLDataKeluar(),
+            future: getmySQLDataMasuk(),
             builder: (context, snapshot) {
               //jika proses request masih berlangsung
 
@@ -83,10 +84,10 @@ class _IncomingPageState extends State<SuratKeluar>
                   final data = snapshot.data![index];
                   return ListTile(
                     trailing: TextButton(
-                      onPressed: getmySQLDataKeluar,
+                      onPressed: getmySQLDataMasuk,
                       child: const Icon(Icons.edit),
                     ),
-                    leading: Text(data.IdSuratKeluar),
+                    leading: Text(data.IdSuratMasuk),
                     title: Text(data.NomorUrut),
                     subtitle: Text(data.IsiRingkas),
 
@@ -106,20 +107,22 @@ class _IncomingPageState extends State<SuratKeluar>
 }
 
 
-Future<List<SuratKeluarModel>> getmySQLDataKeluar() async {
+Future<List<SuratMasukModel>> getmySQLDataMasuk() async {
   var db = Mysql();
-  String sql = 'select * from surat_keluar;';
-  final List<SuratKeluarModel> mylist = [];
+  String sql = 'select * from surat_masuk;';
+  final List<SuratMasukModel> mylist = [];
   await db.getConnection().then((conn) async {
     await conn.query(sql).then((results) {
       for (var res in results) {
-        final SuratKeluarModel myuser = SuratKeluarModel(
-          IdSuratKeluar: res['IdSuratKeluar'].toString(),
+        final SuratMasukModel myuser = SuratMasukModel(
+          IdSuratMasuk: res['IdSuratMasuk'].toString(),
           NomorUrut: res['NomorUrut'].toString(),
+          Pengirim: res['Pengirim'].toString(),
           NomorDanTanggal: res['NomorDanTanggal'].toString(),
           IsiRingkas: res['IsiRingkas'].toString(),
           HubNomorAgenda: res['HubNomorAgenda'].toString(),
           Keterangan: res['Keterangan'].toString(),
+          Disposisi: res['Disposisi'].toString(),
 
         );
         mylist.add(myuser);

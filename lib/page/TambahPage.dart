@@ -1,5 +1,5 @@
-import 'package:simas/UserModel.dart';
-import 'database.dart';
+import 'package:simas/model/UserModel.dart';
+import 'package:simas/database/Database.dart';
 
 Future<void> _Update_Data(String id, String username, String password) async {
   final db = Mysql();

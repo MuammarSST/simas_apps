@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'database.dart';
+import 'package:simas/database/Database.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'main.dart';
+import '../main.dart';
 
 void main() => runApp(const Daftar());
 

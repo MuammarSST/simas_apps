@@ -1,25 +1,71 @@
 import 'package:flutter/material.dart';
-import 'package:simas/SuratKeluarModel.dart';
 import 'database.dart';
+import 'package:simas/SuratKeluarModel.dart';
 class SuratKeluarPage extends StatelessWidget {
+  const SuratKeluarPage();
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
+          flexibleSpace: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              TabBar(
+                tabs: [
+                  Tab(
+                    text: 'Laporan Surat Keluar',
+                  ),
+
+                ],
+              )
+            ],
+          ),
+        ),
+        body: TabBarView(
+          children: [
+            SuratKeluar(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SuratKeluar extends StatefulWidget {
+  @override
+  _IncomingPageState createState() => _IncomingPageState();
+
+}
+
+class _IncomingPageState extends State<SuratKeluar>
+    with AutomaticKeepAliveClientMixin<SuratKeluar> {
+  int count = 10;
+
+  void clear() {
+    setState(() {
+      count = 0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Surat Keluar'),
-      ),
+
 
       //fitur digunakan untuk refresh tarik kebawah
       body: RefreshIndicator(
         onRefresh: () =>
-            getmySQLData(),
+            getmySQLDataKeluar(),
         color: Colors.red,
         child: Container(
           margin: EdgeInsets.all(10),
           //ketika page ini di akses maka meminta data ke api
           child: FutureBuilder(
-            future: getmySQLData(),
+            future: getmySQLDataKeluar(),
             builder: (context, snapshot) {
               //jika proses request masih berlangsung
 
@@ -37,7 +83,7 @@ class SuratKeluarPage extends StatelessWidget {
                   final data = snapshot.data![index];
                   return ListTile(
                     trailing: TextButton(
-                      onPressed: getmySQLData,
+                      onPressed: getmySQLDataKeluar,
                       child: const Icon(Icons.edit),
                     ),
                     leading: Text(data.IdSuratKeluar),
@@ -54,9 +100,13 @@ class SuratKeluarPage extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
-Future<List<SuratKeluarModel>> getmySQLData() async {
+
+Future<List<SuratKeluarModel>> getmySQLDataKeluar() async {
   var db = Mysql();
   String sql = 'select * from surat_keluar;';
   final List<SuratKeluarModel> mylist = [];

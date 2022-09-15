@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'database.dart';
 import 'package:simas/SuratMasukModel.dart';
-class SuratMasukPage extends StatelessWidget {
-  const SuratMasukPage();
+class DashboardPage extends StatelessWidget {
+  const DashboardPage();
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class SuratMasukPage extends StatelessWidget {
                 tabs: [
 
                   Tab(
-                    text: 'Data Surat Masuk',
+                    text: 'Dashboard',
                   ),
                 ],
               )
